@@ -96,7 +96,7 @@ simple_solver("tears","abbey",words)
 #Function for using on unknown solutions
 #Current issue with this - when a guess contains an exact letter match
 # if that letter appears elsewhere in the guess word, it will show as black
-# this code treats that as an orange
+# this code treats that as an orange 
 
 live_solver <- function(words){
   guess <- readline(prompt="Enter initial guess: ")
