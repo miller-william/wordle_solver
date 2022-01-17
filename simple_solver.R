@@ -66,6 +66,10 @@ choose_word <- function(words){
   return(as.character(words[index,'words']))
 }
 
+#best initial guesses
+choose_word(words)
+# "sores" "sales" "sanes" "cares" "bares" "pares"
+
 #automatic solver on test answer
 #choose starting guess
 
@@ -89,7 +93,7 @@ random_row <- sample(1:nrow(words),1)
 test_answer <- as.character(words[random_row,1])
 #test_answer <- "abbey"
 
-simple_solver("tears","abbey",words)
+simple_solver("sores","abbey",words)
 
 ##################################
 
