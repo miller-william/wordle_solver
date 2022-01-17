@@ -50,12 +50,12 @@ trim_word_list <- function(input,results, words){
   return(output)
 }
 
-#select optimal guesses from remaining solution space
+#choose optimal guesses from remaining solution space
 #optimal guess is one which has potential to 'rule out' the most possibilities.
 #e.g. guess which has most overlap with other solutions
 #returns top 5 guesses
 
-#output word most 'similar' to remaining words. This is based on minimum optimal string alignment distance
+#output word most 'similar' to remaining words. This is based on minimum optimal string alignment distance from all other words
 #see https://cran.r-project.org/web/packages/stringdist/stringdist.pdf
 
 choose_word <- function(words){
@@ -96,22 +96,25 @@ simple_solver("tears","abbey",words)
 #Function for using on unknown solutions
 #Current issue with this - when a guess contains an exact letter match
 # if that letter appears elsewhere in the guess word, it will show as black
-# this code treats that as an orange 
+# For this code to work, you need to enter the results for this duplicate letter as ORANGE
 
 live_solver <- function(words){
+  print(paste0("Enter all inputs as lower case"))
   guess <- readline(prompt="Enter initial guess: ")
-  results <- readline(prompt="Enter initial result: ")
+  results <- toupper(readline(prompt="Enter initial result: "))
   while(results != "GGGGG"){ 
     #reduce solution space
     words <- trim_word_list(input = guess, results = results, words)
     guess <- choose_word(words)[1]
-    user <- readline(prompt=paste0("Your guess is : ",guess,". Want a different guess? (Y/N):"))
-    if(user=="Y"){
+    user <- readline(prompt=paste0("Your guess is : ",guess,". Want a different guess? (y/n):"))
+    if(user=="y"){
+      #give second best guess instead
       guess <- choose_word(words)[2]
       print(paste0("New guess: ", guess))
     }
-    results <- readline(prompt="Enter result: ")
+    results <- toupper(readline(prompt="Enter result: "))
   }
+  paste0('You win!')
 }
 
 live_solver(words)
