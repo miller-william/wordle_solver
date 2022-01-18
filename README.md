@@ -29,4 +29,4 @@ If using 'sores' (best starting guess as suggested by the model), the solver ave
 
 ## Word list
 
-This was taken from [here](https://gist.github.com/cfreshman). Credit to [https://github.com/cfreshman](github.com/cfreshman).
+This was taken from [here](https://gist.github.com/cfreshman). Credit to [github.com/cfreshman](https://github.com/cfreshman).
