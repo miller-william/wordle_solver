@@ -73,4 +73,4 @@ If using 'sores' (best starting guess suggested by the model), the solver averag
 If using 'soare' as the starting word (best starting guess suggested by the model) the solver averaged 4.29 guesses with a 100% success rate. (Currently only tested on 200 random answers).
 
 ## Word list
-This was taken from [here](https://gist.github.com/cfreshman). Credit to [github.com/cfreshman](github.com/cfreshman).
+This was taken from [here](https://gist.github.com/cfreshman). Credit to [github.com/cfreshman](https://github.com/cfreshman).
