@@ -1,3 +1,5 @@
+source("set_up.R")
+
 # Entropy functions
 
 log2_alt <- function(x){
@@ -11,7 +13,10 @@ entropy <- function(dist){
 
 entropy_choose <- function(words){
   
+  #if one word left, that's our answer
   if(nrow(words)==1){return(as.character(words$words));break}
+  #if only two valid words left, better to randomly choose one and give yourself a chance of getting it in 1 guess. 
+  if(nrow(words)==2){return(as.character(words[sample(1:2,1),'words']));break}
   
   #work out how many times each letter appears in each position in the answer set
   letters_in_pos <- data.frame()
@@ -102,7 +107,7 @@ entropy_solver <- function(guess,test_answer,words){
   guesses <- 0
   while(results != "GGGGG"){ 
     results <- simulate_results(word = guess,answer = test_answer)
-    print(guess)
+    cat(colour_res(guess,results),'\n')
     words <- trim_word_list(input = guess, results = results, words)
     guesses <- guesses + 1
     guess <- entropy_choose(words)
@@ -111,7 +116,7 @@ entropy_solver <- function(guess,test_answer,words){
   return(guesses)
 }
 
-entropy_solver("soare","bobby",words)
+entropy_solver("soare","point",words)
 
 # live solver
 
@@ -131,3 +136,18 @@ live_entropy_solver <- function(words){
 
 live_entropy_solver(words)
 
+######### Final testing ############
+
+sample_ans <- sample(1:length(answers),100)
+
+length(answers)
+#loop through each answer word -> takes a while
+score <- ""
+for(answer in answers[]){
+  score <- c(score,entropy_solver(guess="soare",test_answer=answer,words))
+}
+score <- score[-1]
+performance <- data.frame(answers[sample_ans])
+performance$score <- as.integer(score)
+mean(performance$score)
+sum((performance$score>6))

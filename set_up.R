@@ -29,7 +29,25 @@ simulate_results <- function(word,answer){
   return(results)
 }
 
-simulate_results('tares','abbey')
+results <- simulate_results('tares','abbey')
+
+#set up colours for printing results
+cols <- c(
+  "\033[48;5;249m", # grey
+  "\033[48;5;226m", # yellow
+  "\033[48;5;46m"   # green
+)
+
+#print colour results
+colour_res <- function(word,results){
+  for(i in 1:nchar(word)){
+    if(substr(results,i,i)=='G'){cat(paste0(cols[3],' ',substr(word,i,i)))}
+    else if(substr(results,i,i)=='O'){cat(paste0(cols[2],' ',substr(word,i,i)))}
+    else{cat(paste0(cols[1],' ',substr(word,i,i)))}
+  }
+}
+
+colour_res("tares",results)
 
 #reduce solution space based on wordle input and results
 
@@ -58,3 +76,4 @@ trim_word_list <- function(input,results, words){
 }
 
 #trim_word_list("tears",'NONGN',words)
+

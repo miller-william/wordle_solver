@@ -1,3 +1,5 @@
+source("set_up.R")
+
 #choose optimal guesses from remaining solution space
 #optimal guess is one which has potential to 'rule out' the most possibilities. ie information gain
 #e.g. guess which has most overlap with other solutions
@@ -35,31 +37,6 @@ simple_solver <- function(guess,test_answer,words){
   return(guesses)
 }
 
-######### Final testing ############
-
-#loop through each answer word -> takes a while
-score <- ""
-for(answer in answers[1:100]){
-  score <- c(score,entropy_solver(guess="tares",test_answer=answer,words))
-}
-score <- score[-1]
-performance <- data.frame(answers)
-performance$score <- as.integer(score)
-
-#if using 'tears' as the starting word, get average 4.91 guesses for dataset with an 88% success rate
-#if using 'sores', as suggested by the model, get average of 5.23 guesses with an 84% success rate.
-#if using 'cares' as the starting word, get average 5.98 with a 70% success rate
-#if using 'cares' and not allowing dups on second guess, average of 5.8 guesses with a 75% success rate
-#entropy solver: using 'tares', average of 4.69 with a 90% success rate.
-
-
-#select a random word for testing
-random_row <- sample(1:length(answers),1)
-test_answer <- as.character(answers[random_row])
-#test_answer <- "abbey"
-
-simple_solver("tears","point",words)
-
 ################# LIVE SOLVER ###############
 
 #Function for using on unknown solutions
@@ -84,3 +61,32 @@ live_simple_solver <- function(words){
 }
 
 live_simple_solver(words)
+
+######### Final testing ############
+
+length(answers)
+#loop through each answer word -> takes a while
+score <- ""
+for(answer in answers[]){
+  score <- c(score,simple_solver(guess="sores",test_answer=answer,words))
+}
+score <- score[-1]
+performance <- data.frame(answers[sample_ans])
+performance$score <- as.integer(score)
+mean(performance$score)
+sum((performance$score>6))
+
+
+#if using 'tears' as the starting word, get average 4.91 guesses for dataset with an 88% success rate
+#if using 'sores', as suggested by the model, get average of 5.23 guesses with an 84% success rate.
+#if using 'cares' as the starting word, get average 5.98 with a 70% success rate
+#if using 'cares' and not allowing dups on second guess, average of 5.8 guesses with a 75% success rate
+#entropy solver: using 'tares', average of 4.69 with a 90% success rate.
+
+
+#select a random word for testing
+random_row <- sample(1:length(answers),1)
+test_answer <- as.character(answers[random_row])
+#test_answer <- "abbey"
+
+simple_solver("tears","point",words)
