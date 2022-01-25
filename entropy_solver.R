@@ -1,6 +1,6 @@
 source("set_up.R")
 
-# Entropy functions
+# Entropy function 
 
 log2_alt <- function(x){
   if(x <= 0){return(0)}
@@ -11,19 +11,19 @@ entropy <- function(dist){
   return(-(dist * log2_alt(dist)))
 }
 
-entropy_choose <- function(words){
+entropy_choose <- function(solution_space){
   
   #if one word left, that's our answer
-  if(nrow(words)==1){return(as.character(words$words));break}
+  if(nrow(solution_space)==1){return(as.character(solution_space['words']));break}
   #if only two valid words left, better to randomly choose one and give yourself a chance of getting it in 1 guess. 
-  if(nrow(words)==2){return(as.character(words[sample(1:2,1),'words']));break}
+  if(nrow(solution_space)==2){return(as.character(solution_space[sample(1:2,1),'words']));break}
   
   #work out how many times each letter appears in each position in the answer set
   letters_in_pos <- data.frame()
   i <- 1
   for(letter in letters){
     for(pos in 1:5){
-      letters_in_pos[i,pos] <- sum(substr(words$words,pos,pos) == letter)
+      letters_in_pos[i,pos] <- sum(substr(solution_space[,'words'],pos,pos) == letter)
     }
     i <- i + 1 
   }
@@ -37,19 +37,19 @@ entropy_choose <- function(words){
   
   #generate prev green letters word e.g. #a###
   for(i in 1:5){
-    if(length(unique(substr(words$words,i,i)))==1){
-      prev_green_letters[i] <- unique(substr(words$words,i,i))
+    if(length(unique(substr(solution_space[,'words'],i,i)))==1){
+      prev_green_letters[i] <- unique(substr(solution_space[,'words'],i,i))
     }
     else{prev_green_letters[i] <- "#"}
   }
-
+  
   #currently unknown positions
   unknown <- which(unlist(str_split(prev_green_letters,""))=="#")
   
   #generate known letters based on solution space (e.g. letters in every word)
   prev_orange_letters <- ""
   for(char in letters){
-    if(sum(grepl(char,words$words)) == nrow(words)){
+    if(sum(grepl(char,solution_space[,'words'])) == nrow(solution_space)){
       prev_orange_letters <- c(prev_orange_letters,char)
     }
   }
@@ -76,7 +76,7 @@ entropy_choose <- function(words){
       
       else{orange_score <- 0}
       
-      grey_score <- 5*nrow(words) - green_score - orange_score
+      grey_score <- 5*nrow(solution_space) - green_score - orange_score
       
       dist <- c(green_score, orange_score, grey_score)
       #print(dist)
@@ -93,14 +93,11 @@ entropy_choose <- function(words){
     }
     
   }
-return(best_word)
+  return(best_word)
 }
 
-entropy_choose(words)
+#entropy_choose(words)
 #gives best starting word as soare
-
-#guess <- 'soare'
-#test_answer <- "blobby"
 
 entropy_solver <- function(guess,test_answer,words){
   results <- ""
@@ -116,7 +113,7 @@ entropy_solver <- function(guess,test_answer,words){
   return(guesses)
 }
 
-entropy_solver("soare","point",words)
+#entropy_solver("soare","point",words)
 
 # live solver
 
@@ -134,20 +131,4 @@ live_entropy_solver <- function(words){
   paste0('You win!')
 }
 
-live_entropy_solver(words)
-
-######### Final testing ############
-
-sample_ans <- sample(1:length(answers),100)
-
-length(answers)
-#loop through each answer word -> takes a while
-score <- ""
-for(answer in answers[]){
-  score <- c(score,entropy_solver(guess="soare",test_answer=answer,words))
-}
-score <- score[-1]
-performance <- data.frame(answers[sample_ans])
-performance$score <- as.integer(score)
-mean(performance$score)
-sum((performance$score>6))
+#live_entropy_solver(words)
