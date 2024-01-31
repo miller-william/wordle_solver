@@ -2,7 +2,7 @@
 
 This is my attempt at building a simple wordle solver in R.
 
-[wordle](https://www.powerlanguage.co.uk/wordle/)
+[wordle](https://www.nytimes.com/games/wordle/index.html)
 
 ## Set up (set_up.R)
 
